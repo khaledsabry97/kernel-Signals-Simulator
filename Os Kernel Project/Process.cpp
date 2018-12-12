@@ -4,11 +4,10 @@
 Process* Process::instance = NULL;
 Process::Process()
 {
-	kernel = Kernel::getInstance();
 }
 
 
-Process * Process::getInstance()
+Process* Process::getInstance()
 {
 	if (instance == NULL)
 		instance = new Process();
@@ -16,6 +15,10 @@ Process * Process::getInstance()
 	return instance;
 }
 
+void Process::addKernel()
+{
+	kernel = Kernel::getInstance();
+}
 Process::~Process()
 {
 }
@@ -26,6 +29,11 @@ void Process::run()
 		currentProcess = processes.at(0);
 
 
+}
+
+void Process::addProcess(ProcessStructure structure)
+{
+	processes.push_back(new ProcessStructure(structure));
 }
 
 void Process::up(Signals signal, string data)
@@ -60,5 +68,6 @@ void Process::down(Signals signal, string data)
 	else if (signal == SIGUSR2)
 	{
 		clk++;
+		currentProcess->clk++;
 	}
 }

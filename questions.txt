@@ -1,0 +1,20 @@
+Disk:-
+"data from disk to kernel process transferred via the up link": what data will be transferred to the kernel from disk
+
+- should i send a message to the kernel after the 3 sec of adding to tell him that i added the 
+message successfully so i can tell the process the operation went  fine
+
+
+Process:-
+"Every process can read a single file": is that mean that there will be more than file or you meant each process can read a single row
+"Time" : this time refers to what exactly
+
+-should be able two processes run at the same time or the scheduler will only take one process and run it until it finishes and then take the next process
+
+-in only one second should all the processes send to the kernel their operation or only one
+
+Kernel:-
+"check the disk status": does this means that i send to disk via the down link a signal to return the status at the up link of the disk or should i store the status of the disk each time
+i add/delete by making the disk send on the uplink the size after he adds/deletes
+
+- should i check the length of the char of the message at the kernel or at the process or at the disk at the time i check the size of remaining slots and its running status(adding/deleting/available)

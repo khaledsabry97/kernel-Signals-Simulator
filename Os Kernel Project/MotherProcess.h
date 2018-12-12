@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
-#include "Signals.h"
+//#include "Signals.h"
 #include <string>
+#include "stdafx.h"
 using namespace std;
 class MotherProcess
 {

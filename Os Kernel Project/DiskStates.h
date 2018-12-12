@@ -2,7 +2,7 @@
 
 enum DiskStates
 {
-	free,
+	available,
 	adding,
 	deleting,
 	sizeComplete

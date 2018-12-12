@@ -3,7 +3,7 @@ enum Signals
 {
 	SIGUSR1,
 	SIGUSR2,
-	sizeComplete,
+	noFreeSlots,
 	add,
 	deleteSlot,
 	kernelResponse,

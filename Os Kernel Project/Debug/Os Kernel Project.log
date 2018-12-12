@@ -1,0 +1,7 @@
+﻿  stdafx.cpp
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(15): error C2143: syntax error: missing ';' before '*'
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(15): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(15): error C2238: unexpected token(s) preceding ';'
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(16): error C2143: syntax error: missing ';' before '*'
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(16): error C2238: unexpected token(s) preceding ';'

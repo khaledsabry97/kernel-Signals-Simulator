@@ -1,18 +1,21 @@
 #pragma once
-#include "MotherProcess.h"
+/*#include "MotherProcess.h"
 #include "Process.h"
-#include "Disk.h"
+#include "Disk.h"*/
+#include "stdafx.h"
+class Disk;
+class Process;
 class Kernel: public MotherProcess
 {
 	int clk;
 	int processesSize;
-	vector<Process> processes;
 	int currentProcessIndex;
-	Disk* disk;
-	Process* process;
+
 	string tempMessage;
 	static Kernel* instance;
 	Kernel();
+	Disk* disk;
+	Process* process;
 public:
 	static Kernel* getInstance();
 	~Kernel();

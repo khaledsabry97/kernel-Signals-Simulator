@@ -1,9 +1,11 @@
 #pragma once
-#include "MotherProcess.h"
 #include <vector>
-#include "DiskStates.h"
-#include "Kernel.h"
-#include "Signals.h"
+//#include "DiskStates.h"
+//#include "Kernel.h"
+
+#include "stdafx.h"
+using namespace std;
+class kernel;
 class Disk :
 	public MotherProcess
 {
@@ -16,10 +18,13 @@ class Disk :
 	int tempIndex;
 	//to differentiate between the normal clk and the processing clk
 	int processClk;
-	Kernel* kernel;
+	Kernel * kernel;
 	Disk();
+
 public:
+
 	static Disk* getInstance();
+	void addKernel();
 	~Disk();
 	void add(string data);
 	void deleteSlot(int index);

@@ -4,6 +4,7 @@
 Kernel* Kernel::instance = NULL;
 Kernel::Kernel()
 {
+	process = Process::getInstance();
 	disk = Disk::getInstance();
 }
 
@@ -21,10 +22,6 @@ Kernel::~Kernel()
 }
 
 void Kernel::log()
-{
-}
-
-void Kernel::run()
 {
 }
 
@@ -85,11 +82,16 @@ void Kernel::down(Signals signal, string data)
 			up(deleteSlot, tempMessage);
 		}
 	}
+	else if (signal == SIGUSR1)
+	{
+		int freeSlots = stoi(data);
+	}
 
 }
 
 void Kernel::run()
 {
+
 	clk++;
 	up(SIGUSR2, "");
 }
