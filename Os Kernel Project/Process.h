@@ -1,18 +1,23 @@
 #pragma once
 #include "MotherProcess.h"
+#include "Kernel.h"
+#include "ProcessStates.h"
+#include "ProcessStructure.h"
 class Process :
 	public MotherProcess
 {
-	int time;
-	char operation;
-	string data;
-public:
+	vector<ProcessStructure*> processes;
+	ProcessStructure* currentProcess;
+	Kernel* kernel;
+	static Process* instance;
 	Process();
+public:
+	static Process* getInstance();
 	~Process();
+	virtual void run() override;
 
 	// Inherited via MotherProcess
-	virtual void up(string key, string data) override;
-	virtual void down(string key, string data) override;
-	virtual void run() override;
+	virtual void up(Signals signal, string data) override;
+	virtual void down(Signals signal, string data) override;
 };
 

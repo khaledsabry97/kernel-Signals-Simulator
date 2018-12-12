@@ -2,7 +2,8 @@
 #include "MotherProcess.h"
 #include <vector>
 #include "DiskStates.h"
-
+#include "Kernel.h"
+#include "Signals.h"
 class Disk :
 	public MotherProcess
 {
@@ -15,6 +16,7 @@ class Disk :
 	int tempIndex;
 	//to differentiate between the normal clk and the processing clk
 	int processClk;
+	Kernel* kernel;
 	Disk();
 public:
 	static Disk* getInstance();
@@ -22,11 +24,18 @@ public:
 	void add(string data);
 	void deleteSlot(int index);
 	bool isFreeSlots();
+	bool isAvailable();
 	// Inherited via MotherProcess
-	virtual void up(string key, string data) override; // to the kernel
-	virtual void down(string key, string data) override; // from the kernel
+	
 	// Inherited via MotherProcess
 	virtual void run() override;
+
+	// Inherited via MotherProcess
+	virtual void up(Signals signal, string data) override;
+	virtual void down(Signals signal, string data) override;
+
+
+	Signals up();
 	// get from kernel
 };
 

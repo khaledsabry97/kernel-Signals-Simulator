@@ -6,12 +6,17 @@ Disk::Disk()
 {
 	size = 10;
 	state = DiskStates::free;
+	kernel = Kernel::getInstance();
 }
 
 
 Disk * Disk::getInstance()
 {
-	return nullptr;
+
+	if (instance == NULL)
+		instance = new Disk();
+
+	return instance;
 }
 
 Disk::~Disk()
@@ -35,12 +40,11 @@ bool Disk::isFreeSlots()
 	return true;
 }
 
-void Disk::up(string key, string data)
+bool Disk::isAvailable()
 {
-}
-
-void Disk::down(string key, string data)
-{
+	if (isFreeSlots() && state == DiskStates::free)
+		return true;
+	return false;
 }
 
 void Disk::run()
@@ -72,5 +76,18 @@ void Disk::run()
 			processClk = 0;
 			state = DiskStates::free;
 		}
+	}
+}
+
+void Disk::up(Signals signal, string data)
+{
+}
+
+//return true if you want the kernel to recieve on the up message on the up signal
+void Disk::down(Signals signal, string data)
+{
+	if (signal == SIGUSR2)
+	{
+		clk++;
 	}
 }

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\enums">
+      <UniqueIdentifier>{295a6a30-f009-4b0a-9c6f-0c12037275ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -27,11 +30,23 @@
     <ClInclude Include="Disk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DiskStates.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Process.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Kernel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessStructure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DiskStates.h">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="Signals.h">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessStates.h">
+      <Filter>Header Files\enums</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +63,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Kernel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
