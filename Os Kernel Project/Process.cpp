@@ -1,34 +1,22 @@
 #include "stdafx.h"
 #include "Process.h"
 
-Process* Process::instance = NULL;
+
 Process::Process()
 {
-}
-
-
-Process* Process::getInstance()
-{
-	if (instance == NULL)
-		instance = new Process();
-
-	return instance;
-}
-
-void Process::addKernel()
-{
 	kernel = Kernel::getInstance();
+	kernel->addProcess(this);
+	
 }
+
 Process::~Process()
 {
 }
 
 void Process::run()
 {
-	if (currentProcess == NULL)
-		currentProcess = processes.at(0);
-
-
+	if (current == NULL)
+		current = processes[0];
 }
 
 void Process::addProcess(ProcessStructure structure)
@@ -39,7 +27,7 @@ void Process::addProcess(ProcessStructure structure)
 void Process::up(Signals signal, string data)
 {
 	kernel->down(signal, data);
-	currentProcess->state = blocked;
+	current->state = blocked;
 }
 
 void Process::down(Signals signal, string data)
@@ -68,6 +56,5 @@ void Process::down(Signals signal, string data)
 	else if (signal == SIGUSR2)
 	{
 		clk++;
-		currentProcess->clk++;
 	}
 }

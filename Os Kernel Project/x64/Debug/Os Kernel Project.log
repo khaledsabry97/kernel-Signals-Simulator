@@ -1,2 +1,13 @@
-﻿  Process.cpp
+﻿  stdafx.cpp
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(6): warning C4099: 'ProcessStructure': type name first seen using 'struct' now seen using 'class'
+  e:\projects\os project\os kernel signals simulator\os kernel project\processstructure.h(6): note: see declaration of 'ProcessStructure'
+e:\projects\os project\os kernel signals simulator\os kernel project\process.h(10): warning C4099: 'ProcessStructure': type name first seen using 'struct' now seen using 'class'
+  e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(6): note: see declaration of 'ProcessStructure'
+  Disk.cpp
+  Kernel.cpp
+  MotherProcess.cpp
+  Os Kernel Project.cpp
+  Process.cpp
+  ReadingWriting.cpp
+  Generating Code...
   Os Kernel Project.vcxproj -> E:\Projects\OS Project\Os Kernel signals simulator\x64\Debug\Os Kernel Project.exe

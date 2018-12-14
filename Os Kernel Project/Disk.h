@@ -12,19 +12,17 @@ class Disk :
 	int size;
 	vector<string> slots;
 	DiskStates state;
-	static Disk* instance;
 	//to store the coming value through the downlink
 	string tempAdd;
 	int tempIndex;
 	//to differentiate between the normal clk and the processing clk
 	int processClk;
 	Kernel * kernel;
-	Disk();
+	int sizeFree;
+	
 
 public:
-
-	static Disk* getInstance();
-	void addKernel();
+	Disk();
 	~Disk();
 	void add(string data);
 	void deleteSlot(int index);

@@ -8,6 +8,7 @@ class MotherProcess
 {
 
 protected: int clk;
+		   vector<MotherProcess*> processes;
 public:
 	MotherProcess();
 	virtual void up(Signals signal, string data) = 0;

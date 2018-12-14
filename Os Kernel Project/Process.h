@@ -7,21 +7,18 @@
 
 using namespace std;
 class kernel;
-class Process :
-	public MotherProcess
+class ProcessStructure;
+class Process :public MotherProcess
 {
 	vector<ProcessStructure*> processes;
-	ProcessStructure* currentProcess;
+	ProcessStructure* current;
 	Kernel* kernel;
 
-	static Process* instance;
-	Process();
 
 public:
-	static Process* getInstance();
+	Process();
 	~Process();
 	virtual void run() override;
-	void addKernel();
 	void addProcess(ProcessStructure structure);
 	// Inherited via MotherProcess
 	virtual void up(Signals signal, string data) override;

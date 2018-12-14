@@ -1,25 +1,13 @@
 #include "stdafx.h"
 #include "Disk.h"
 
-Disk* Disk::instance = NULL;//initailize
 Disk::Disk()
 {
 	size = 10;
 	state = DiskStates::available;
-}
-
-
-Disk * Disk::getInstance()
-{
-
-	if (instance == NULL)
-		instance = new Disk();
-	return instance;
-}
-
-void Disk::addKernel()
-{
+	sizeFree = 10;
 	kernel = Kernel::getInstance();
+	kernel->addDisk(this);
 }
 
 Disk::~Disk()
@@ -102,10 +90,13 @@ void Disk::down(Signals signal, string data)
 	{
 		state = adding;
 		tempAdd = data;
+		sizeFree--;
+
 	}
 	else if (signal == Signals::deleteSlot)
 	{
 		state = deleting;
 		tempIndex = stoi(data);
+		sizeFree++;
 	}
 }

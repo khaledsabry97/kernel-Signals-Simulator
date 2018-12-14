@@ -1,3 +1,0 @@
-10 A hello world
-13 D  HI
-20 A any one there

@@ -10,7 +10,7 @@ class ReadingWriting
 {
 public:
 	ReadingWriting();
-	bool readInput(string inputFileName);
+	vector<Process*> readInput(int noOfFiles, string inputFileName);
 	bool writeOutputArray(int time,string log);
 
 	~ReadingWriting();

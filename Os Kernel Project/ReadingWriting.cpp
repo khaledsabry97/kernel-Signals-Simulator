@@ -6,38 +6,50 @@ ReadingWriting::ReadingWriting()
 {
 }
 
-bool ReadingWriting::readInput(string inputFileName)
+vector<Process*> ReadingWriting::readInput(int noOfFiles, string inputFileName)
 {
+
 	ifstream inputfile;
-	inputfile.open("process.txt");
-	if (!inputfile.is_open()) 
-	{ 
-		cout << "failed to open file" << endl;
-		return false;
-	}
-	Process* process = Process::getInstance();
+	vector<Process*> processes;
 	try
 	{
-		while (!inputfile.eof())
+		int i = 0;
+		while (i < noOfFiles)
 		{
-			ProcessStructure structure;
-			inputfile >> structure.time;
-			inputfile >> structure.operation;
-			getline(inputfile, structure.data);
-			structure.data = structure.data.substr(1, structure.data.size() + 1);
-			process->addProcess(structure);
-		}
 
+			i++;
+			Process* process = new Process();
+
+			inputfile.open("process" + to_string(i) + ".txt");
+			if (!inputfile.is_open())
+			{
+				cout << "failed to open file" << endl;
+				return processes;
+			}
+			int j = 0;
+			while (!inputfile.eof())
+			{
+				ProcessStructure structure;
+				inputfile >> structure.time;
+				inputfile >> structure.operation;
+				getline(inputfile, structure.data);
+				structure.data = structure.data.substr(1, structure.data.size() + 1);
+				structure.id = i * 10 + j;
+				process->addProcess(structure);
+				j++;
+			}
+			processes.push_back(process);
+			inputfile.close();
+		}
 	}
 	catch (exception e)
 	{
 		cout << "failed in something while reading the text file " << endl;
 		inputfile.close();
-		return false;
+		return processes;
 	}
 	inputfile.close();
-
-	return true;
+	return processes;
 }
 
 bool ReadingWriting::writeOutputArray(int time, string log)

@@ -1,10 +1,9 @@
 #pragma once
-/*#include "MotherProcess.h"
-#include "Process.h"
-#include "Disk.h"*/
 #include "stdafx.h"
+#include <vector>
 class Disk;
 class Process;
+class ProcessStructure;
 class Kernel: public MotherProcess
 {
 	int clk;
@@ -12,10 +11,11 @@ class Kernel: public MotherProcess
 	int currentProcessIndex;
 
 	string tempMessage;
+
+	Disk* disk;
+	vector<Process*> processes;
 	static Kernel* instance;
 	Kernel();
-	Disk* disk;
-	Process* process;
 public:
 	static Kernel* getInstance();
 	~Kernel();
@@ -25,5 +25,8 @@ public:
 	virtual void up(Signals signal, string data) override;
 	virtual void down(Signals signal, string data) override;
 	virtual void run() override;
+	void addProcess(Process* process);
+	void addDisk(Disk* disk);
+	void sendToAllProcesses(Signals signals, string msg);
 };
 

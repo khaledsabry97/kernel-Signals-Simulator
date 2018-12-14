@@ -4,8 +4,6 @@
 Kernel* Kernel::instance = NULL;
 Kernel::Kernel()
 {
-	process = Process::getInstance();
-	disk = Disk::getInstance();
 }
 
 
@@ -33,7 +31,7 @@ void Kernel::up(Signals signal, string data)
 	}
 	else if (signal == kernelResponse)
 	{
-		process->down(signal, data);
+		//process->down(signal, data);
 	}
 	else if (signal == deleteSlot || signal == add)
 	{
@@ -41,8 +39,8 @@ void Kernel::up(Signals signal, string data)
 	}
 	else if (signal == SIGUSR2)
 	{
-		process->down(signal, "");
 		disk->down(signal, "");
+		sendToAllProcesses(signal, "");
 	}
 }
 
@@ -91,7 +89,24 @@ void Kernel::down(Signals signal, string data)
 
 void Kernel::run()
 {
-
 	clk++;
 	up(SIGUSR2, "");
+}
+
+void Kernel::addProcess(Process * process)
+{
+	processes.push_back(process);
+}
+
+void Kernel::addDisk(Disk * disk)
+{
+	this->disk = disk;
+}
+
+void Kernel::sendToAllProcesses(Signals signals, string msg)
+{
+	for (int i = 0; i < processes.size(); i++)
+	{
+		processes[i]->down(signals, msg);
+	}
 }

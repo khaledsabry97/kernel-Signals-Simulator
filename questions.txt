@@ -1,9 +1,15 @@
 Disk:-
-"data from disk to kernel process transferred via the up link": what data will be transferred to the kernel from disk
-
 - should i send a message to the kernel after the 3 sec of adding to tell him that i added the 
-message successfully so i can tell the process the operation went  fine
+message successfully so i can tell the process from the kernel the response message that the operation completed successfully (same thing  for deletion)
 
+A) Send the messages that are indicated in the document.
+
+- should i decrease the size of free slots after the 3 sec. of the add or before these 3 sec. " before i start the adding operation (latency) "
+A)Decrease at the beginning before the 3 seconds.
+
+- should i make the disk unavailable when he begins to add which means that when the kernel checks the disk status it gives to the kernel that it's busy so i send back to the process that you can't add.
+
+A)All requests to disk are masked during the disk work.
 
 Process:-
 "Every process can read a single file": is that mean that there will be more than file or you meant each process can read a single row
