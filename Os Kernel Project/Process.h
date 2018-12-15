@@ -1,27 +1,23 @@
 #pragma once
-//#include "Kernel.h"
-//#include "ProcessStructure.h"
-
 #include "stdafx.h"
-#include <vector>
 
 using namespace std;
-class kernel;
-class ProcessStructure;
+
+class Request;
 class Process :public MotherProcess
 {
-	vector<ProcessStructure*> processes;
-	ProcessStructure* current;
-	Kernel* kernel;
-
+	queue<Request*> requests;
+	Request* current;
+	bool running;
 
 public:
-	Process();
+	Process(int channel);
 	~Process();
 	virtual void run() override;
-	void addProcess(ProcessStructure structure);
+	void addRequest(Request structure);
+
 	// Inherited via MotherProcess
-	virtual void up(Signals signal, string data) override;
-	virtual void down(Signals signal, string data) override;
+	virtual void up(int channel, string msg) override;
+	virtual void down(int channel, string msg) override;
 };
 

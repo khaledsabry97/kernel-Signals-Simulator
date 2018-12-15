@@ -1,11 +1,11 @@
 ﻿  stdafx.cpp
-e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(6): warning C4099: 'ProcessStructure': type name first seen using 'struct' now seen using 'class'
-  e:\projects\os project\os kernel signals simulator\os kernel project\processstructure.h(6): note: see declaration of 'ProcessStructure'
-e:\projects\os project\os kernel signals simulator\os kernel project\process.h(10): warning C4099: 'ProcessStructure': type name first seen using 'struct' now seen using 'class'
-  e:\projects\os project\os kernel signals simulator\os kernel project\kernel.h(6): note: see declaration of 'ProcessStructure'
+e:\projects\os project\os kernel signals simulator\os kernel project\process.h(6): warning C4099: 'Request': type name first seen using 'struct' now seen using 'class'
+  e:\projects\os project\os kernel signals simulator\os kernel project\request.h(6): note: see declaration of 'Request'
   Disk.cpp
   Kernel.cpp
+e:\projects\os project\os kernel signals simulator\os kernel project\kernel.cpp(79): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   MotherProcess.cpp
+e:\projects\os project\os kernel signals simulator\os kernel project\motherprocess.cpp(29): warning C4553: '==': result of expression not used; did you intend '='?
   Os Kernel Project.cpp
   Process.cpp
   ReadingWriting.cpp

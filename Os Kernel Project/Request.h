@@ -3,12 +3,9 @@
 #include "ProcessStates.h"
 #include <string>
 using namespace std;
-struct ProcessStructure
+struct Request
 {
-	int id;
 	int time;
 	char operation;
 	string data;
-	ProcessStates state = away;
-
 };

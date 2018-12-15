@@ -23,90 +23,78 @@ void Kernel::log()
 {
 }
 
-void Kernel::up(Signals signal, string data)
-{
-	if (signal == checkDiskStatus)
-	{
-		disk->down(signal, "");
-	}
-	else if (signal == kernelResponse)
-	{
-		//process->down(signal, data);
-	}
-	else if (signal == deleteSlot || signal == add)
-	{
-		disk->down(signal, data);
-	}
-	else if (signal == SIGUSR2)
-	{
-		disk->down(signal, "");
-		sendToAllProcesses(signal, "");
-	}
-}
-
-void Kernel::down(Signals signal, string data)
-{
-	if (signal == add)
-	{
-		if (data.size() > 64)
-			//send not able to add/delete
-			up(kernelResponse, "2");
-		else
-			up(checkDiskStatus, "0"); // zero mean add which will increment if you can add
-		tempMessage = data;
-
-
-	}
-
-	else if (signal == checkDiskStatus)
-	{
-		//data number refer to hash table of my own
-		//0 can't add
-		//1 can add
-		//2 can't delete
-		//3 can delete
-		if(data == "0")
-			up(kernelResponse, "2");
-		else if (data == "1")
-		{
-			up(kernelResponse, "0");
-			up(add, tempMessage);
-		}
-		else if (data == "2")
-			up(kernelResponse, "3");
-		else if (data == "1")
-		{
-			up(kernelResponse, "1");
-			up(deleteSlot, tempMessage);
-		}
-	}
-	else if (signal == SIGUSR1)
-	{
-		int freeSlots = stoi(data);
-	}
-
-}
-
 void Kernel::run()
 {
 	clk++;
-	up(SIGUSR2, "");
 }
 
-void Kernel::addProcess(Process * process)
+void Kernel::addDiskChannel(int channel)
 {
-	processes.push_back(process);
+	diskChannel = channel;
 }
 
-void Kernel::addDisk(Disk * disk)
+void Kernel::up(int channel, string msg)
 {
-	this->disk = disk;
+	send(channel, msg);
 }
 
-void Kernel::sendToAllProcesses(Signals signals, string msg)
+void Kernel::down(int channel, string msg)
 {
-	for (int i = 0; i < processes.size(); i++)
+	if (channel == diskChannel)
 	{
-		processes[i]->down(signals, msg);
+		if (stoi(msg) != 0)
+		{
+			//send to process that you are able to add/delete
+			//the message
+			if (tempIndex == -1)//add
+			{
+				up(diskChannel, tempMsg);
+				up(tempChannel, "successful ADD");
+			}
+			else
+			{
+				up(diskChannel, to_string(tempIndex));
+				up(tempChannel, "successful DEL");
+			}
+		}
+		else
+		{
+			//send to process that you are not able to add/delete
+			//the message
+			if (tempIndex == -1)//add
+			{
+				up(tempChannel, "unable to ADD");
+			}
+			else
+			{
+				up(tempChannel, "unable to DEL");
+			}
+		}
+		tempIndex = -1; //something to use it later like check if other process has sent the signal first
+		return;
 	}
+	//else then it's a process sending a request
+	char ad = msg[0];
+	msg = msg.substr(2, msg.length() -2);
+	int msgSize = msg.size();
+	tempChannel = channel;
+	if (msgSize > 64)
+	{
+		if (ad = 'A')
+			up(channel, "unable to ADD Because of the size");
+		return;
+	}
+	if (ad = 'A')
+	{
+		tempMsg = msg;
+		tempIndex = -1;
+		//send signal to disk to check the size
+	}
+	else if (ad = 'D')
+	{
+		tempIndex = -1;
+		tempMsg = "";
+		//send signal to disk to check the size
+	}
+
 }

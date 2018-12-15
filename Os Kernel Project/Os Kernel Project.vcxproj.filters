@@ -36,9 +36,6 @@
     <ClInclude Include="Kernel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProcessStructure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DiskStates.h">
       <Filter>Header Files\enums</Filter>
     </ClInclude>
@@ -49,6 +46,9 @@
       <Filter>Header Files\enums</Filter>
     </ClInclude>
     <ClInclude Include="ReadingWriting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Request.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

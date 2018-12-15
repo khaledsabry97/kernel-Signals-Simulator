@@ -1,13 +1,11 @@
 #include "stdafx.h"
 #include "Disk.h"
 
-Disk::Disk()
+Disk::Disk(int channel)
 {
 	size = 10;
-	state = DiskStates::available;
 	sizeFree = 10;
-	kernel = Kernel::getInstance();
-	kernel->addDisk(this);
+	this->channel = channel;
 }
 
 Disk::~Disk()
@@ -24,79 +22,47 @@ void Disk::deleteSlot(int index)
 	slots.erase(slots.begin() + index);
 }
 
-bool Disk::isFreeSlots()
-{
-	if (slots.size() == 10)
-		return false;
-	return true;
-}
-
-bool Disk::isAvailable()
-{
-	if (isFreeSlots() && state == DiskStates::available)
-		return true;
-	return false;
-}
-
 void Disk::run()
 {
-
-	if (state == DiskStates::adding)
+	if (state == DiskStatus::adding)
 	{
-		processClk++;
-		if (processClk == 3)
+		if (clk - processClk == 3)
 		{
-			add(tempAdd);
-			processClk = 0;
-			if (isFreeSlots())
-			{
-				state = DiskStates::available;
-			}
-			else
-			{
-				state = DiskStates::sizeComplete;
-			}
+			//add has finished
+			state = DiskStatus::available;
 		}
 	}
 
-	if (state == DiskStates::deleting)
+	if (state == DiskStatus::deleting)
 	{
-		processClk++;
-		if (processClk == 1)
+		if (clk - processClk == 1)
 		{
-			deleteSlot(tempIndex);
-			processClk = 0;
-			state = DiskStates::available;
+			//add has finished
+			state = DiskStatus::available;
 		}
 	}
 }
 
-void Disk::up(Signals signal, string data)
+void Disk::up(int channel, string msg)
 {
-		kernel->down(signal, data);
+	send(channel, msg);
 }
 
-void Disk::down(Signals signal, string data)
+void Disk::down(int channel, string msg)
 {
-	if (signal == SIGUSR1)
+	if (this->channel != channel && state == DiskStatus::available)
+		return;
+	if (state == DiskStatus::adding)
 	{
-		up(SIGUSR1, to_string(size - slots.size()));
-	}
-	else if (signal == SIGUSR2)
-	{
-		clk++;
-	}
-	else if (signal == Signals::add)
-	{
-		state = adding;
-		tempAdd = data;
+		add(msg);
 		sizeFree--;
-
+		processClk = clk;
 	}
-	else if (signal == Signals::deleteSlot)
+	else//deleting
 	{
-		state = deleting;
-		tempIndex = stoi(data);
+		deleteSlot(stoi(msg));
 		sizeFree++;
+		processClk = clk;
 	}
 }
+

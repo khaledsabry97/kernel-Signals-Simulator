@@ -2,11 +2,13 @@
 #include "Process.h"
 
 
-Process::Process()
+
+Process::Process(int channel)
 {
-	kernel = Kernel::getInstance();
-	kernel->addProcess(this);
-	
+	this->channel = channel;
+	running = true;
+	addProcess(this);
+
 }
 
 Process::~Process()
@@ -16,25 +18,35 @@ Process::~Process()
 void Process::run()
 {
 	if (current == NULL)
-		current = processes[0];
-}
-
-void Process::addProcess(ProcessStructure structure)
-{
-	processes.push_back(new ProcessStructure(structure));
-}
-
-void Process::up(Signals signal, string data)
-{
-	kernel->down(signal, data);
-	current->state = blocked;
-}
-
-void Process::down(Signals signal, string data)
-{
-	if (signal == kernelResponse)
 	{
-		int i = stoi(data);
+		kill(channel);
+		return;
+	}
+	if (running == false)
+		return;
+	if (clk == current->time)
+		up(channel, current->data);
+
+}
+
+void Process::addRequest(Request structure)
+{
+	requests.push(new Request(structure));
+	current = requests.front();
+}
+
+void Process::up(int channel, string msg)
+{
+	send(channel, msg);
+	running = false;
+}
+
+void Process::down(int channel, string msg)
+{
+	if (this->channel != channel)
+		return;
+
+		int i = stoi(msg);
 		switch (i)
 		{
 		case 0:
@@ -52,9 +64,16 @@ void Process::down(Signals signal, string data)
 		default:
 			break;
 		}
+		requests.pop();
+		current = requests.front();
+		running = true;
 	}
-	else if (signal == SIGUSR2)
+
+	
+
+/*else if (signal == SIGUSR2)
 	{
 		clk++;
 	}
-}
+
+	*/

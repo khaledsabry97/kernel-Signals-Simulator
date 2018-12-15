@@ -18,7 +18,7 @@ vector<Process*> ReadingWriting::readInput(int noOfFiles, string inputFileName)
 		{
 
 			i++;
-			Process* process = new Process();
+			Process* process = new Process(1000+i);
 
 			inputfile.open("process" + to_string(i) + ".txt");
 			if (!inputfile.is_open())
@@ -29,13 +29,12 @@ vector<Process*> ReadingWriting::readInput(int noOfFiles, string inputFileName)
 			int j = 0;
 			while (!inputfile.eof())
 			{
-				ProcessStructure structure;
+				Request structure;
 				inputfile >> structure.time;
 				inputfile >> structure.operation;
 				getline(inputfile, structure.data);
 				structure.data = structure.data.substr(1, structure.data.size() + 1);
-				structure.id = i * 10 + j;
-				process->addProcess(structure);
+				process->addRequest(structure);
 				j++;
 			}
 			processes.push_back(process);

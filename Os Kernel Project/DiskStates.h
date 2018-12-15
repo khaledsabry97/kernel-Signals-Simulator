@@ -1,6 +1,6 @@
 #pragma once
 
-enum DiskStates
+enum DiskStatus
 {
 	available,
 	adding,

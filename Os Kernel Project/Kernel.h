@@ -1,19 +1,13 @@
 #pragma once
 #include "stdafx.h"
-#include <vector>
-class Disk;
-class Process;
-class ProcessStructure;
 class Kernel: public MotherProcess
 {
-	int clk;
-	int processesSize;
-	int currentProcessIndex;
+	int channel = 0;
+	int diskChannel;
+	int tempIndex = -1;
+	string tempMsg = "";
+	int tempChannel;
 
-	string tempMessage;
-
-	Disk* disk;
-	vector<Process*> processes;
 	static Kernel* instance;
 	Kernel();
 public:
@@ -21,12 +15,12 @@ public:
 	~Kernel();
 	void log();
 
-	// Inherited via MotherProcess
-	virtual void up(Signals signal, string data) override;
-	virtual void down(Signals signal, string data) override;
+	void addDiskChannel(int channel);
 	virtual void run() override;
-	void addProcess(Process* process);
-	void addDisk(Disk* disk);
-	void sendToAllProcesses(Signals signals, string msg);
+	
+
+	// Inherited via MotherProcess
+	virtual void up(int channel, string msg) override;
+	virtual void down(int channel, string msg) override;
 };
 

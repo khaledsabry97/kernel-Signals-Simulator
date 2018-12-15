@@ -1,9 +1,5 @@
 #pragma once
-#include <iostream>
-#include <fstream>
-#include <string>
-#include "ProcessStructure.h"
-#include "Process.h"
+#include "stdafx.h"
 using namespace std;
 class Process;
 class ReadingWriting
